@@ -1,12 +1,16 @@
 package com.example.myapplication.api;
 
+import com.example.myapplication.entities.Contact;
 import com.example.myapplication.entities.User;
 
 import java.util.HashMap;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+
 public interface WebServiceApi {
     @POST("Users/Login")
     Call<User> isUser(@Body HashMap<String, String> data);
@@ -14,4 +18,12 @@ public interface WebServiceApi {
     @POST("Users/Register")
     Call<Void> createUser(@Body User user);
 
+    @GET("contacts")
+    Call<List<Contact>> getContacts(String user);
+
+//    @POST("contacts")
+//    Call<Void> createContact(@Body Contact contact);
+//
+//    @DELETE("contacts/{id}")
+//    Call<Void> deleteContact(@Path("id") int id);
 }

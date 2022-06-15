@@ -1,20 +1,16 @@
 package com.example.myapplication;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.myapplication.api.Api;
-import com.example.myapplication.api.MyCallBack;
+import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.Dictionary;
-import java.util.Enumeration;
+import com.example.myapplication.api.Api;
+
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
@@ -32,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         });
         Button loginBtn= findViewById(R.id.btn_login);
         loginBtn.setOnClickListener(v->{
+            Intent iChat = new Intent(this, ChatActivity.class);
             TextView UsernameError=findViewById(R.id.login_UserNameError);
             TextView PasswordError=findViewById(R.id.login_PasswordError);
             UsernameError.setVisibility(View.GONE);
@@ -55,8 +52,10 @@ public class MainActivity extends AppCompatActivity {
                 dict.put("Password", Password);
                 api.checkLogin(dict, user -> {
                     if(user!=null){
-                        Intent i=new Intent(this,Register.class);
-                        startActivity(i);
+//                        Intent i=new Intent(this,Register.class);
+//                        startActivity(i);
+                        String current_user = Username;
+                        startActivity(iChat.putExtra("user", current_user));
                     } else{
                         TextView LoginError=findViewById(R.id.login_PasswordError);
                         LoginError.setText("Invalid username or password");
