@@ -43,7 +43,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
         if (contacts != null) {
             final Contact current = contacts.get(position);
             holder.tvContact.setText(current.getContact());
-            holder.ivPic.setImageResource(current.getPic());
+            holder.ivPic.setImageResource(R.drawable.cat);
         }
     }
 

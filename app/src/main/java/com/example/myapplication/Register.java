@@ -18,8 +18,6 @@ import android.widget.TextView;
 import com.example.myapplication.api.Api;
 import com.example.myapplication.entities.User;
 
-import java.util.HashMap;
-
 public class Register extends AppCompatActivity {
     private ImageView image;
     public TextView UsernameError;
@@ -87,8 +85,9 @@ public class Register extends AppCompatActivity {
                 User newUser=new User(Username,Username,Password,Nickname);
                 api.RegisterUser(newUser, success -> {
                     if(success){
-                        Intent i=new Intent(this,MainActivity.class);
-                        startActivity(i);
+                        Intent iChat = new Intent(this, ChatActivity.class);
+                        String current_user = Username;
+                        startActivity(iChat.putExtra("user", current_user));
                     } else{
                         UsernameError.setText("Username taken");
                         UsernameError.setVisibility(View.VISIBLE);

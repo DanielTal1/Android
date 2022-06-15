@@ -1,78 +1,81 @@
 package com.example.myapplication.entities;
 
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
+//import androidx.room.Entity;
+//import androidx.room.PrimaryKey;
 
 import com.example.myapplication.R;
 
-@Entity
+//@Entity
 public class Contact {
 
-    @PrimaryKey(autoGenerate = true)
-    private int id;
-    private String userId;
-    private String contact;
-    private String server;
-    private String last;
-    private String lastdate;
-    private int pic;
+    //@PrimaryKey(autoGenerate = true)
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getContact() {
-        return contact;
+        return name;
     }
 
     public void setContact(String contact) {
-        this.contact = contact;
+        this.name = contact;
     }
 
-    public String getUserId() { return userId; }
+    private String id;
+    private String name;
+    private String server;
+    private String last;
+    private String lastdate;
 
-    public void setUserId(String userId) { this.userId = userId; }
-
-    public String getServer() { return server; }
-
-    public void setServer(String server) { this.server = server; }
-
-    public String getLast() { return last; }
-
-    public void setLast(String last) { this.last = last; }
-
-    public String getLastdate() { return lastdate;}
-
-    public void setLastdate(String lastdate) { this.lastdate = lastdate; }
-
-    public int getPic() {
-        return pic;
+    public String getID() {
+        return id;
     }
 
-    public void setPic(int pic) {
-        this.pic = pic;
+    public void setID(String ID) {
+        this.id = ID;
     }
 
-    public Contact() {
-        this.pic = R.drawable.cat;
+    public String getName() {
+        return name;
     }
 
-    public Contact(int id, String userId, String contact, String server, String last, String lastdate) {
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getServer() {
+        return server;
+    }
+
+    public void setServer(String server) {
+        this.server = server;
+    }
+
+    public String getLast() {
+        return last;
+    }
+
+    public void setLast(String last) {
+        this.last = last;
+    }
+
+    public String getLastdate() {
+        return lastdate;
+    }
+
+    public void setLastdate(String lastdate) {
+        this.lastdate = lastdate;
+    }
+
+
+    public Contact(String id,  String contact, String server, String last, String lastdate) {
         this.id = id;
-        this.userId = userId;
-        this.contact = contact;
+        this.name = contact;
         this.server = server;
         this.last = last;
         this.lastdate = lastdate;
     }
 
-    public Contact(int id, String contact, int pic) {
+    public Contact(String id, String contact) {
         this.id = id;
-        this.contact = contact;
-        this.pic = pic;
+        this.name = contact;
     }
 }

@@ -9,20 +9,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.adapters.ContactsListAdapter;
-import com.example.myapplication.api.ContactsApi;
+import com.example.myapplication.api.Api;
 import com.example.myapplication.entities.Contact;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ChatActivity extends AppCompatActivity {
 
 //    private AppDB db;
 //    private PostDao postDao;
-
     private List<Contact> contacts;
-//    private ArrayAdapter<Contact> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,26 +45,16 @@ public class ChatActivity extends AppCompatActivity {
             startActivity(i);
         });
 
-        ContactsApi contactsApi = new ContactsApi();
-        contactsApi.get();
-
         RecyclerView lstContacts = findViewById(R.id.lstContacts);
         final ContactsListAdapter adapter = new ContactsListAdapter(this);
-
+        Api api = new Api();
         lstContacts.setAdapter(adapter);
         lstContacts.setLayoutManager(new LinearLayoutManager(this));
+        api.get(user, apiContacts-> {
+            adapter.setContacts(apiContacts);
+        });
 
-        // it's a hardcoded example
-        contacts = new ArrayList<>();
-        contacts.add(new Contact(1, "Alice", R.drawable.cat));
-        contacts.add(new Contact(2, "Bob", R.drawable.cat));
-        contacts.add(new Contact(3, "Rita", R.drawable.cat));
-        contacts.add(new Contact(4, "Daniel", R.drawable.cat));
-        contacts.add(new Contact(5, "Foo", R.drawable.cat));
-        contacts.add(new Contact(6, "Itay", R.drawable.cat));
-        contacts.add(new Contact(7, "Hunter", R.drawable.cat));
 
-        adapter.setContacts(contacts);
 
     }
 }

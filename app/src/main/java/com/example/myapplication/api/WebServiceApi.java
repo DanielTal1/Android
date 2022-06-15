@@ -10,6 +10,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 public interface WebServiceApi {
     @POST("Users/Login")
@@ -18,8 +19,8 @@ public interface WebServiceApi {
     @POST("Users/Register")
     Call<Void> createUser(@Body User user);
 
-    @GET("contacts")
-    Call<List<Contact>> getContacts(String user);
+    @GET("Contacts")
+    Call<List<Contact>> getContacts(@Query("user") String user);
 
 //    @POST("contacts")
 //    Call<Void> createContact(@Body Contact contact);

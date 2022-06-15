@@ -4,9 +4,12 @@ import android.widget.TextView;
 
 import com.example.myapplication.MyApplication;
 import com.example.myapplication.R;
+import com.example.myapplication.adapters.ContactsListAdapter;
+import com.example.myapplication.entities.Contact;
 import com.example.myapplication.entities.User;
 
 import java.util.HashMap;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -56,6 +59,28 @@ public class Api {
             }
 
 
+        });
+
+
+    }
+
+
+
+    public void get(String user,MyCallBackContactsList myCallBackContactsList) {
+        Call<List<Contact>> call = webServiceApi.getContacts(user);
+        call.enqueue(new Callback<List<Contact>>() {
+
+            @Override
+            public void onResponse(Call<List<Contact>> call, Response<List<Contact>> response) {
+                if(response.code()!=404){
+                    myCallBackContactsList.onResponse(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Contact>> call, Throwable t) {
+                call.cancel();
+            }
         });
     }
 }
