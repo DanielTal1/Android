@@ -1,5 +1,6 @@
 package com.example.myapplication.adapters;
 
+import android.content.ClipData;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,8 +30,12 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
 
     private final LayoutInflater mInflater;
     private List<Contact> contacts;
+    private ItemClickListener mItemListener;
 
-    public ContactsListAdapter(Context context) { mInflater = LayoutInflater.from(context); }
+    public ContactsListAdapter(Context context, ItemClickListener itemClickListener) {
+        mInflater = LayoutInflater.from(context);
+        mItemListener = itemClickListener;
+    }
 
     @Override
     public ContactViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -44,6 +49,10 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
             final Contact current = contacts.get(position);
             holder.tvContact.setText(current.getContact());
             holder.ivPic.setImageResource(R.drawable.cat);
+
+            holder.itemView.setOnClickListener(view -> {
+                mItemListener.onItemClick(contacts.get(position));
+            });
         }
     }
 
@@ -58,6 +67,10 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
             return contacts.size();
         }
         else return 0;
+    }
+
+    public interface ItemClickListener {
+        void onItemClick(Contact contact);
     }
 
     public List<Contact> getContacts() { return contacts; }

@@ -5,12 +5,15 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.myapplication.adapters.ContactsListAdapter;
 import com.example.myapplication.api.Api;
 import com.example.myapplication.entities.Contact;
+import com.example.myapplication.viewmodels.ContactsViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
@@ -20,11 +23,19 @@ public class ChatActivity extends AppCompatActivity {
 //    private AppDB db;
 //    private PostDao postDao;
     private List<Contact> contacts;
+//    private ContactsViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
+//        viewModel = new ViewModelProvider(this).get(ContactsViewModel.class);
+//
+//        SwipeRefreshLayout refreshLayout = findViewById(R.id.refreshLayout);
+//        refreshLayout.setOnRefreshListener(() -> {
+//            viewModel.reload();
+//        });
 
         TextView tvCurrentUser = findViewById(R.id.tvCurrentUser);
 
@@ -46,15 +57,24 @@ public class ChatActivity extends AppCompatActivity {
         });
 
         RecyclerView lstContacts = findViewById(R.id.lstContacts);
-        final ContactsListAdapter adapter = new ContactsListAdapter(this);
+        final ContactsListAdapter adapter = new ContactsListAdapter(this, new ContactsListAdapter.ItemClickListener() {
+            @Override
+            public void onItemClick(Contact contact) {
+                Intent iMessages = new Intent(ChatActivity.this, MessagesActivity.class);
+                Bundle extras = new Bundle();
+                String current_contact = contact.getContact().toString();
+                extras.putString("user", user);
+                extras.putString("contact", current_contact);
+//                startActivity(iMessages.putExtra("contact", current_contact));
+                startActivity(iMessages.putExtras(extras));
+            }
+        });
         Api api = new Api();
         lstContacts.setAdapter(adapter);
         lstContacts.setLayoutManager(new LinearLayoutManager(this));
         api.get(user, apiContacts-> {
             adapter.setContacts(apiContacts);
         });
-
-
 
     }
 }

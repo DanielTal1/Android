@@ -1,6 +1,7 @@
 package com.example.myapplication.api;
 
 import com.example.myapplication.entities.Contact;
+import com.example.myapplication.entities.Message;
 import com.example.myapplication.entities.User;
 
 import java.util.HashMap;
@@ -10,6 +11,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface WebServiceApi {
@@ -21,6 +23,9 @@ public interface WebServiceApi {
 
     @GET("Contacts")
     Call<List<Contact>> getContacts(@Query("user") String user);
+
+    @GET("Contacts/{id}/Messages")
+    Call<List<Message>> getMessages(@Path("id") String id, @Query("user") String user);
 
 //    @POST("contacts")
 //    Call<Void> createContact(@Body Contact contact);

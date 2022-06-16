@@ -6,6 +6,7 @@ import com.example.myapplication.MyApplication;
 import com.example.myapplication.R;
 import com.example.myapplication.adapters.ContactsListAdapter;
 import com.example.myapplication.entities.Contact;
+import com.example.myapplication.entities.Message;
 import com.example.myapplication.entities.User;
 
 import java.util.HashMap;
@@ -79,6 +80,24 @@ public class Api {
 
             @Override
             public void onFailure(Call<List<Contact>> call, Throwable t) {
+                call.cancel();
+            }
+        });
+    }
+
+    public void getMessages(String user, String contact, MyCallbackMessagesList myCallBackMessagesList) {
+        Call<List<Message>> call = webServiceApi.getMessages(contact, user);
+        call.enqueue(new Callback<List<Message>>() {
+
+            @Override
+            public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
+                if(response.code()!=404){
+                    myCallBackMessagesList.onResponse(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Message>> call, Throwable t) {
                 call.cancel();
             }
         });
