@@ -1,6 +1,7 @@
 package com.example.myapplication.api;
 
 import com.example.myapplication.entities.Contact;
+import com.example.myapplication.entities.Message;
 import com.example.myapplication.entities.User;
 
 import java.util.HashMap;
@@ -30,6 +31,8 @@ public interface WebServiceApi {
     @POST("contacts/AddContact")
     Call<Void> addContact(@Body HashMap<String, String> data);
 
+    @GET("Contacts/{id}/Messages")
+    Call<List<Message>> getMessages(@Path("id") String id, @Query("user") String user);
 
 //    @POST("contacts")
 //    Call<Void> createContact(@Body Contact contact);

@@ -106,7 +106,18 @@ public class ChatActivity extends AppCompatActivity {
         });
 
         RecyclerView lstContacts = findViewById(R.id.lstContacts);
-        final ContactsListAdapter adapter = new ContactsListAdapter(this);
+        final ContactsListAdapter adapter = new ContactsListAdapter(this, new ContactsListAdapter.ItemClickListener() {
+            @Override
+            public void onItemClick(Contact contact) {
+                Intent iMessages = new Intent(ChatActivity.this, MessagesActivity.class);
+                Bundle extras = new Bundle();
+                String current_contact = contact.getContact().toString();
+                extras.putString("user", user);
+                extras.putString("contact", current_contact);
+//                startActivity(iMessages.putExtra("contact", current_contact));
+                startActivity(iMessages.putExtras(extras));
+            }
+        });
         Api api = new Api();
         lstContacts.setAdapter(adapter);
         lstContacts.setLayoutManager(new LinearLayoutManager(this));
