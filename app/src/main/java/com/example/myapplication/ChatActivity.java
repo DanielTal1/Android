@@ -114,10 +114,19 @@ public class ChatActivity extends AppCompatActivity {
                 String current_contact = contact.getContact().toString();
                 extras.putString("user", user);
                 extras.putString("contact", current_contact);
-//                startActivity(iMessages.putExtra("contact", current_contact));
                 startActivity(iMessages.putExtras(extras));
             }
         });
+
+        SwipeRefreshLayout swipeRefreshLayout = findViewById(R.id.refreshLayout);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                adapter.notifyDataSetChanged();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
         Api api = new Api();
         lstContacts.setAdapter(adapter);
         lstContacts.setLayoutManager(new LinearLayoutManager(this));
