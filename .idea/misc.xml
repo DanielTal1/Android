@@ -3,8 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Myapplication-Andorid/app/src/main/res/drawable-anydpi/ic_add.xml" value="0.26" />
+        <entry key="..\:/Myapplication-Andorid/app/src/main/res/layout/activity_add_contact.xml" value="0.33980582524271846" />
         <entry key="..\:/Myapplication-Andorid/app/src/main/res/layout/activity_chat.xml" value="0.35104166666666664" />
-        <entry key="..\:/Myapplication-Andorid/app/src/main/res/layout/activity_main.xml" value="0.28688524590163933" />
+        <entry key="..\:/Myapplication-Andorid/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Myapplication-Andorid/app/src/main/res/layout/activity_register.xml" value="0.4" />
       </map>
     </option>

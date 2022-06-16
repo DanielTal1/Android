@@ -64,6 +64,31 @@ public class Api {
 
     }
 
+    public void inviteContact(HashMap<String, String> data, final MyIntegerCallBack mycallback){
+        String url="http://"+data.get("server")+"/api/invitation/AddContact";
+        Call<Void> call = webServiceApi.inviteContact(url,data);
+        call.enqueue(new Callback<Void>() {
+
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if(response.code()==404){
+                    mycallback.onResponse(0);
+                } else if(response.code()==400){
+                    mycallback.onResponse(1);
+                }
+                else{
+                    mycallback.onResponse(2);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                mycallback.onResponse(3);
+                call.cancel();
+            }
+        });
+    }
+
 
 
     public void get(String user,MyCallBackContactsList myCallBackContactsList) {
@@ -79,6 +104,28 @@ public class Api {
 
             @Override
             public void onFailure(Call<List<Contact>> call, Throwable t) {
+                call.cancel();
+            }
+        });
+    }
+
+
+    public void addContact(HashMap<String, String> data, final MyIntegerCallBack mycallback){
+        Call<Void> call = webServiceApi.addContact(data);
+        call.enqueue(new Callback<Void>() {
+
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if(response.code()==404){
+                    mycallback.onResponse(0);
+                } else if(response.code()==400){
+                    mycallback.onResponse(1);
+                }
+                mycallback.onResponse(2);
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
                 call.cancel();
             }
         });
