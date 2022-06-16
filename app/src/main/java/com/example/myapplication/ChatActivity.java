@@ -53,7 +53,8 @@ public class ChatActivity extends AppCompatActivity {
         FloatingActionButton btnAddContact = findViewById(R.id.btnAddContact);
         btnAddContact.setOnClickListener(view -> {
             Intent i = new Intent(this, AddContactActivity.class);
-            startActivity(i);
+            String current_user = user;
+            startActivity(i.putExtra("user", current_user));
         });
 
         RecyclerView lstContacts = findViewById(R.id.lstContacts);
@@ -76,5 +77,41 @@ public class ChatActivity extends AppCompatActivity {
             adapter.setContacts(apiContacts);
         });
 
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        setContentView(R.layout.activity_chat);
+
+        TextView tvCurrentUser = findViewById(R.id.tvCurrentUser);
+
+        Intent intent = getIntent();
+        String user = (String) intent.getSerializableExtra("user");
+        if (user != null) {
+            tvCurrentUser.setText(user);
+        }
+
+//        db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "PostsDB")
+//                .allowMainThreadQueries().build();
+//
+//        postDao = db.postDao();
+
+        FloatingActionButton btnAddContact = findViewById(R.id.btnAddContact);
+        btnAddContact.setOnClickListener(view -> {
+            Intent i = new Intent(this, AddContactActivity.class);
+            String current_user = user;
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i.putExtra("user", current_user));
+        });
+
+        RecyclerView lstContacts = findViewById(R.id.lstContacts);
+        final ContactsListAdapter adapter = new ContactsListAdapter(this);
+        Api api = new Api();
+        lstContacts.setAdapter(adapter);
+        lstContacts.setLayoutManager(new LinearLayoutManager(this));
+        api.get(user, apiContacts-> {
+            adapter.setContacts(apiContacts);
+        });
     }
 }
