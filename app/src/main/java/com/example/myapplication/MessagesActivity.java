@@ -36,9 +36,9 @@ public class MessagesActivity extends AppCompatActivity {
         Bundle extras = intent.getExtras();
         String contact = extras.getString("contact");
         String user = extras.getString("user");
-
-        if (contact != null) {
-            tvCurrentContact.setText(contact);
+        String nickname = extras.getString("nickname");
+        if (nickname != null) {
+            tvCurrentContact.setText(nickname);
         }
 
         RecyclerView lstMessages = findViewById(R.id.lstMessages);
@@ -79,6 +79,7 @@ public class MessagesActivity extends AppCompatActivity {
                     api.getMessages(user, contact, apiMessages-> {
                         adapter.setMessages(apiMessages);
                         msgCount = apiMessages.size();
+                        lstMessages.scrollToPosition(apiMessages.size()-1);
                     });
                 }
             });

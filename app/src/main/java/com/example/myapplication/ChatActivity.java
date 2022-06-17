@@ -63,9 +63,11 @@ public class ChatActivity extends AppCompatActivity {
             public void onItemClick(Contact contact) {
                 Intent iMessages = new Intent(ChatActivity.this, MessagesActivity.class);
                 Bundle extras = new Bundle();
-                String current_contact = contact.getContact().toString();
+                String current_contact = contact.getID();
+                String contact_nick = contact.getName();
                 extras.putString("user", user);
                 extras.putString("contact", current_contact);
+                extras.putString("nickname", contact_nick);
 //                startActivity(iMessages.putExtra("contact", current_contact));
                 startActivity(iMessages.putExtras(extras));
             }
@@ -111,9 +113,11 @@ public class ChatActivity extends AppCompatActivity {
             public void onItemClick(Contact contact) {
                 Intent iMessages = new Intent(ChatActivity.this, MessagesActivity.class);
                 Bundle extras = new Bundle();
-                String current_contact = contact.getContact().toString();
+                String current_contact = contact.getID();
+                String contact_nick = contact.getName();
                 extras.putString("user", user);
                 extras.putString("contact", current_contact);
+                extras.putString("nickname", contact_nick);
                 startActivity(iMessages.putExtras(extras));
             }
         });
