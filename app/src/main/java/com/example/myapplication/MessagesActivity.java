@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,16 +30,18 @@ public class MessagesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_messages);
-
+        ImageView btnBackToContacts=findViewById(R.id.backToContacts2);
+        btnBackToContacts.setOnClickListener(v-> finish());
         TextView tvCurrentContact = findViewById(R.id.tvCurrentContact);
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         String contact = extras.getString("contact");
         String user = extras.getString("user");
-        String nickname = extras.getString("nickname");
-        if (nickname != null) {
-            tvCurrentContact.setText(nickname);
+        String server=extras.getString("server");
+
+        if (contact != null) {
+            tvCurrentContact.setText(contact);
         }
 
         RecyclerView lstMessages = findViewById(R.id.lstMessages);
@@ -71,7 +74,7 @@ public class MessagesActivity extends AppCompatActivity {
             Message message = new Message(0, etMessage.getText().toString(), "00:00", true);
             api.postMessage(user, contact, message, response-> {
                 if (response) {
-                    api.transfer(user, contact, message, resp-> {
+                    api.transfer(user, contact,server, message, resp-> {
                         if (resp) {
                             ;
                         }
@@ -79,7 +82,7 @@ public class MessagesActivity extends AppCompatActivity {
                     api.getMessages(user, contact, apiMessages-> {
                         adapter.setMessages(apiMessages);
                         msgCount = apiMessages.size();
-                        lstMessages.scrollToPosition(apiMessages.size()-1);
+                        lstMessages.scrollToPosition(msgCount - 1);
                     });
                 }
             });
