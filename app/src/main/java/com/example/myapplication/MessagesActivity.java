@@ -39,9 +39,10 @@ public class MessagesActivity extends AppCompatActivity {
         String contact = extras.getString("contact");
         String user = extras.getString("user");
         String server=extras.getString("server");
+        String nickname = extras.getString("nickname");
 
-        if (contact != null) {
-            tvCurrentContact.setText(contact);
+        if (nickname != null) {
+            tvCurrentContact.setText(nickname);
         }
 
         RecyclerView lstMessages = findViewById(R.id.lstMessages);
