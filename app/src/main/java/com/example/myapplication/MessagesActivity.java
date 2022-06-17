@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.myapplication.adapters.MessagesListAdapter;
 import com.example.myapplication.api.Api;
@@ -32,7 +33,6 @@ public class MessagesActivity extends AppCompatActivity {
         TextView tvCurrentContact = findViewById(R.id.tvCurrentContact);
 
         Intent intent = getIntent();
-//        String contact = (String) intent.getSerializableExtra("contact");
         Bundle extras = intent.getExtras();
         String contact = extras.getString("contact");
         String user = extras.getString("user");
@@ -69,23 +69,20 @@ public class MessagesActivity extends AppCompatActivity {
             EditText etMessage = findViewById(R.id.etMessage);
 
             Message message = new Message(0, etMessage.getText().toString(), "00:00", true);
-//            Message contact_msg = new Message(0, etMessage.getText().toString(), "00:00", false);
             api.postMessage(user, contact, message, response-> {
                 if (response) {
+                    api.transfer(user, contact, message, resp-> {
+                        if (resp) {
+                            ;
+                        }
+                    });
                     api.getMessages(user, contact, apiMessages-> {
                         adapter.setMessages(apiMessages);
                         msgCount = apiMessages.size();
                     });
                 }
             });
-//            api.postMessage(contact, user, contact_msg, response-> {
-//                if (response) {
-//                    api.getMessages(user, contact, apiMessages-> {
-//                        adapter.setMessages(apiMessages);
-//                        msgCount = apiMessages.size();
-//                    });
-//                }
-//            });
+
             etMessage.setText("");
         });
     }

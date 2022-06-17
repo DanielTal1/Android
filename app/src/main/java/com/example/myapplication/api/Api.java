@@ -157,10 +157,6 @@ public class Api {
            put("content", message.getContent());
            put("user", user);
         }};
-//        HashMap<String, String> data_contact = new HashMap<String, String>() {{
-//            put("content", message.getContent());
-//            put("user", contact);
-//        }};
 
         Call<Void> from = webServiceApi.createMessage(contact, data_user);
         from.enqueue(new Callback<Void>() {
@@ -176,20 +172,28 @@ public class Api {
                 call.cancel();
             }
         });
+    }
 
-//        Call<Void> to = webServiceApi.createMessage(user, data_contact);
-//        to.enqueue(new Callback<Void>() {
-//            @Override
-//            public void onResponse(Call<Void> call, Response<Void> response) {
-//                if(response.code()!=404){
-//                    myCallbackVoid.onResponse(true);
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Void> call, Throwable t) {
-//                call.cancel();
-//            }
-//        });
+    public void transfer(String user, String contact, Message message, MyCallbackVoid myCallbackVoid) {
+        HashMap<String, String> data = new HashMap<String, String>() {{
+            put("from", user);
+            put("to", contact);
+            put("content", message.getContent());
+        }};
+
+        Call<Void> call = webServiceApi.transferMsg(data);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if(response.code()!=404){
+                    myCallbackVoid.onResponse(true);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                call.cancel();
+            }
+        });
     }
 }
