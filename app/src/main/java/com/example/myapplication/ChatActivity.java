@@ -111,9 +111,11 @@ public class ChatActivity extends AppCompatActivity {
             public void onItemClick(Contact contact) {
                 Intent iMessages = new Intent(ChatActivity.this, MessagesActivity.class);
                 Bundle extras = new Bundle();
-                String current_contact = contact.getContact().toString();
+                String current_contact = contact.getContact();
+                String contact_server=contact.getServer();
                 extras.putString("user", user);
                 extras.putString("contact", current_contact);
+                extras.putString("server",contact_server);
                 startActivity(iMessages.putExtras(extras));
             }
         });

@@ -37,8 +37,8 @@ public interface WebServiceApi {
     @POST("Contacts/{id}/Messages")
     Call<Void> createMessage(@Path("id") String id, @Body HashMap<String, String> data);
 
-    @POST("transfer")
-    Call<Void> transferMsg(@Body HashMap<String, String> data);
+    @POST("{fullUrl}")
+    Call<Void> transferMsg(@Path(value = "fullUrl", encoded = true) String fullUrl,@Body HashMap<String, String> data);
 //    @DELETE("contacts/{id}")
 //    Call<Void> deleteContact(@Path("id") int id);
 }

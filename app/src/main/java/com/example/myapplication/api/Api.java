@@ -174,14 +174,20 @@ public class Api {
         });
     }
 
-    public void transfer(String user, String contact, Message message, MyCallbackVoid myCallbackVoid) {
+    public void transfer(String user, String contact,String server, Message message, MyCallbackVoid myCallbackVoid) {
         HashMap<String, String> data = new HashMap<String, String>() {{
             put("from", user);
             put("to", contact);
             put("content", message.getContent());
         }};
+        String newServer=server;
+        String[] parts=server.split(":");
+        if(parts[0].equals("localhost")){
+            newServer="10.0.2.2:"+parts[1];
+        }
+        String url="http://"+newServer+"/api/transfer";
 
-        Call<Void> call = webServiceApi.transferMsg(data);
+        Call<Void> call = webServiceApi.transferMsg(url,data);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
