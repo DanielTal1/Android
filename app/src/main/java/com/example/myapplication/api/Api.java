@@ -17,6 +17,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Body;
+
 public class Api {
     Retrofit retrofit;
     WebServiceApi webServiceApi;
@@ -148,5 +150,46 @@ public class Api {
                 call.cancel();
             }
         });
+    }
+
+    public void postMessage(String user, String contact, Message message, MyCallbackVoid myCallbackVoid) {
+        HashMap<String, String> data_user = new HashMap<String, String>() {{
+           put("content", message.getContent());
+           put("user", user);
+        }};
+//        HashMap<String, String> data_contact = new HashMap<String, String>() {{
+//            put("content", message.getContent());
+//            put("user", contact);
+//        }};
+
+        Call<Void> from = webServiceApi.createMessage(contact, data_user);
+        from.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if(response.code()!=404){
+                    myCallbackVoid.onResponse(true);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                call.cancel();
+            }
+        });
+
+//        Call<Void> to = webServiceApi.createMessage(user, data_contact);
+//        to.enqueue(new Callback<Void>() {
+//            @Override
+//            public void onResponse(Call<Void> call, Response<Void> response) {
+//                if(response.code()!=404){
+//                    myCallbackVoid.onResponse(true);
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Void> call, Throwable t) {
+//                call.cancel();
+//            }
+//        });
     }
 }

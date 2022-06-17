@@ -78,11 +78,11 @@
 
         <EditText
             android:layout_marginStart="16dp"
-            android:id="@+id/edit_gchat_message"
+            android:id="@+id/etMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toStartOf="@+id/button_gchat_send"
+            android:layout_toStartOf="@+id/btnSend"
             android:background="@android:color/transparent"
             android:hint="Enter Message"
             android:inputType="text"
@@ -90,7 +90,7 @@
             tools:ignore="Autofill" />
 
         <Button
-            android:id="@+id/button_gchat_send"
+            android:id="@+id/btnSend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -100,82 +100,3 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-    <!--<?xml version="1.0" encoding="utf-8"?>-->
-<!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--    xmlns:tools="http://schemas.android.com/tools"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent"-->
-<!--    tools:context=".MessagesActivity">-->
-
-<!--&lt;!&ndash;    <LinearLayout&ndash;&gt;-->
-<!--&lt;!&ndash;        android:id="@+id/linearLayout5"&ndash;&gt;-->
-<!--&lt;!&ndash;        android:layout_width="match_parent"&ndash;&gt;-->
-<!--&lt;!&ndash;        android:layout_height="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;        android:orientation="vertical"&ndash;&gt;-->
-<!--&lt;!&ndash;        app:layout_constraintEnd_toEndOf="parent"&ndash;&gt;-->
-<!--&lt;!&ndash;        app:layout_constraintStart_toStartOf="parent"&ndash;&gt;-->
-<!--&lt;!&ndash;        app:layout_constraintTop_toTopOf="parent">&ndash;&gt;-->
-
-<!--        <LinearLayout-->
-<!--            android:id="@+id/linearLayout3"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:background="@color/white"-->
-<!--            android:backgroundTint="#DFDFDF"-->
-<!--            android:orientation="horizontal"-->
-<!--            android:padding="10dp"-->
-<!--            app:layout_constraintBottom_toTopOf="@id/refreshLayout2"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent">-->
-
-<!--            <ImageView-->
-<!--                android:layout_width="70dp"-->
-<!--                android:layout_height="70dp"-->
-<!--                android:src="@drawable/cat" />-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/tvCurrentContact"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:padding="20dp"-->
-<!--                android:text=""-->
-<!--                android:textSize="20dp" />-->
-<!--        </LinearLayout>-->
-
-<!--        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
-<!--            android:id="@+id/refreshLayout2"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            app:layout_constraintBottom_toTopOf="@id/linearLayout4"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/linearLayout3">-->
-
-<!--            <androidx.recyclerview.widget.RecyclerView-->
-<!--                android:id="@+id/lstMessages"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:background="@android:color/darker_gray" />-->
-
-<!--        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
-<!--&lt;!&ndash;    </LinearLayout>&ndash;&gt;-->
-<!--    <LinearLayout-->
-<!--        android:id="@+id/linearLayout4"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:background="#F1F1F1"-->
-<!--        android:orientation="horizontal"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent">-->
-
-<!--        <EditText-->
-<!--            android:layout_width="320dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:hint="Text here" />-->
-
-<!--        <Button-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Send" />-->
-<!--    </LinearLayout>-->
-
-<!--</androidx.constraintlayout.widget.ConstraintLayout>-->

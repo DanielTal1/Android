@@ -34,9 +34,9 @@ public interface WebServiceApi {
     @GET("Contacts/{id}/Messages")
     Call<List<Message>> getMessages(@Path("id") String id, @Query("user") String user);
 
-//    @POST("contacts")
-//    Call<Void> createContact(@Body Contact contact);
-//
+    @POST("Contacts/{id}/Messages")
+    Call<Void> createMessage(@Path("id") String id, @Body HashMap<String, String> data);
+
 //    @DELETE("contacts/{id}")
 //    Call<Void> deleteContact(@Path("id") int id);
 }
