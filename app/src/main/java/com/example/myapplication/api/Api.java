@@ -8,6 +8,7 @@ import com.example.myapplication.adapters.ContactsListAdapter;
 import com.example.myapplication.entities.Contact;
 import com.example.myapplication.entities.Message;
 import com.example.myapplication.entities.User;
+import com.example.myapplication.repositories.ContactsRepository;
 
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +30,22 @@ public class Api {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         webServiceApi=retrofit.create(WebServiceApi.class);
+    }
+
+    public void sendToken(HashMap<String, String> data){
+        Call<Void> call=webServiceApi.sendToken(data);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                call.cancel();
+            }
+
+
+        });
     }
 
     public void checkLogin(HashMap<String, String> data, final MyCallBack mycallback){
@@ -94,7 +111,7 @@ public class Api {
 
 
 
-    public void get(String user,MyCallBackContactsList myCallBackContactsList) {
+    public void getContacts(String user,MyCallBackContactsList myCallBackContactsList) {
         Call<List<Contact>> call = webServiceApi.getContacts(user);
         call.enqueue(new Callback<List<Contact>>() {
 
@@ -154,8 +171,8 @@ public class Api {
 
     public void postMessage(String user, String contact, Message message, MyCallbackVoid myCallbackVoid) {
         HashMap<String, String> data_user = new HashMap<String, String>() {{
-           put("content", message.getContent());
-           put("user", user);
+            put("content", message.getContent());
+            put("user", user);
         }};
 
         Call<Void> from = webServiceApi.createMessage(contact, data_user);

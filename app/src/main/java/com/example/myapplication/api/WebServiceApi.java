@@ -22,6 +22,9 @@ public interface WebServiceApi {
     @POST("Users/Register")
     Call<Void> createUser(@Body User user);
 
+    @POST("Users/Token")
+    Call<Void> sendToken(@Body HashMap<String, String> data);
+
     @GET("Contacts")
     Call<List<Contact>> getContacts(@Query("user") String user);
 
@@ -39,6 +42,4 @@ public interface WebServiceApi {
 
     @POST("{fullUrl}")
     Call<Void> transferMsg(@Path(value = "fullUrl", encoded = true) String fullUrl,@Body HashMap<String, String> data);
-//    @DELETE("contacts/{id}")
-//    Call<Void> deleteContact(@Path("id") int id);
 }
