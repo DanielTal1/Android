@@ -20,7 +20,6 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
     class ContactViewHolder extends RecyclerView.ViewHolder {
         private final TextView tvContact;
         private final ImageView ivPic;
-
         private ContactViewHolder(View itemView) {
             super(itemView);
             tvContact = itemView.findViewById(R.id.tvContact);

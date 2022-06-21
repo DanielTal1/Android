@@ -3,12 +3,34 @@ package com.example.myapplication.entities;
 //import androidx.room.Entity;
 //import androidx.room.PrimaryKey;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import com.example.myapplication.R;
 
-//@Entity
+@Entity(tableName = "Contact")
 public class Contact {
 
-    //@PrimaryKey(autoGenerate = true)
+    @PrimaryKey()
+    @NonNull
+    private String id;
+    private String name;
+    private String server;
+    private String last;
+    private String lastdate;
+
+
+    public Contact() {}
+    @Ignore
+    public Contact(@NonNull String id,  String contact, String server, String last, String lastdate) {
+        this.id = id;
+        this.name = contact;
+        this.server = server;
+        this.last = last;
+        this.lastdate = lastdate;
+    }
 
 
     public String getContact() {
@@ -19,18 +41,8 @@ public class Contact {
         this.name = contact;
     }
 
-    private String id;
-    private String name;
-    private String server;
-    private String last;
-    private String lastdate;
-
-    public String getID() {
-        return id;
-    }
-
-    public void setID(String ID) {
-        this.id = ID;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -65,17 +77,21 @@ public class Contact {
         this.lastdate = lastdate;
     }
 
-
-    public Contact(String id,  String contact, String server, String last, String lastdate) {
-        this.id = id;
-        this.name = contact;
-        this.server = server;
-        this.last = last;
-        this.lastdate = lastdate;
+    @NonNull
+    public String getId() {
+        return id;
     }
 
-    public Contact(String id, String contact) {
-        this.id = id;
-        this.name = contact;
+    public void setUserId(@NonNull String userId) {
+        id = userId;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

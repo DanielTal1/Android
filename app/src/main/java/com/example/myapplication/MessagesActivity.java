@@ -5,7 +5,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.Button;
@@ -25,10 +28,14 @@ public class MessagesActivity extends AppCompatActivity {
 
     private LinearLayoutManager layoutManager;
     private int msgCount;
+    private  Context context;
+    private String user;
+    private String contact;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context=this;
         setContentView(R.layout.activity_messages);
         ImageView btnBackToContacts=findViewById(R.id.backToContacts2);
         btnBackToContacts.setOnClickListener(v-> finish());
@@ -36,8 +43,8 @@ public class MessagesActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
-        String contact = extras.getString("contact");
-        String user = extras.getString("user");
+        contact = extras.getString("contact");
+        user = extras.getString("user");
         String server=extras.getString("server");
 
         if (contact != null) {
@@ -59,12 +66,9 @@ public class MessagesActivity extends AppCompatActivity {
         });
 
         SwipeRefreshLayout swipeRefreshLayout = findViewById(R.id.refresh);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                adapter.notifyDataSetChanged();
-                swipeRefreshLayout.setRefreshing(false);
-            }
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            adapter.notifyDataSetChanged();
+            swipeRefreshLayout.setRefreshing(false);
         });
 
         Button sendBtn = findViewById(R.id.btnSend);
@@ -90,4 +94,43 @@ public class MessagesActivity extends AppCompatActivity {
             etMessage.setText("");
         });
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        this.registerReceiver(mMessageReceiver, new IntentFilter("unique_name"));
+    }
+
+    //Must unregister onPause()
+    @Override
+    protected void onPause() {
+        super.onPause();
+        this.unregisterReceiver(mMessageReceiver);
+    }
+
+
+    //This is the handler that will manager to process the broadcast intent
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            // Extract data included in the Intent
+            String message = intent.getStringExtra("message");
+            //all of this will be changed, instead the new message will be added to room
+            RecyclerView lstMessages = findViewById(R.id.lstMessages);
+            final MessagesListAdapter adapter = new MessagesListAdapter(context);
+            Api api = new Api();
+            lstMessages.setAdapter(adapter);
+            layoutManager = new LinearLayoutManager(context);
+            layoutManager.setStackFromEnd(true);
+            lstMessages.setLayoutManager(layoutManager);
+
+            api.getMessages(user, contact, apiMessages-> {
+                adapter.setMessages(apiMessages);
+                msgCount = apiMessages.size();
+            });
+        }
+    };
+
 }
