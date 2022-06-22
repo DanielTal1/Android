@@ -96,6 +96,7 @@ public class MessagesActivity extends AppCompatActivity {
         });
     }
 
+    /*
     @Override
     protected void onResume() {
         super.onResume();
@@ -133,5 +134,6 @@ public class MessagesActivity extends AppCompatActivity {
             });
         }
     };
+    */
 
 }

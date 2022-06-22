@@ -89,6 +89,7 @@ public class ChatActivity extends AppCompatActivity {
 ////                contactDao.insert(contact);
 ////            }
 //        });
+        /*
         HashMap<String,String> dict = new HashMap<>();
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(ChatActivity.this, instanceIdResult -> {
             String Token=instanceIdResult.getToken();
@@ -97,6 +98,8 @@ public class ChatActivity extends AppCompatActivity {
             api.sendToken(dict);
         });
 
+
+         */
     }
 
     @Override
