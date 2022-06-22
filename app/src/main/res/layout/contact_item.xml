@@ -6,31 +6,46 @@
     android:layout_marginTop="5dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="10dp"
-    android:background="@color/white"
-    >
-    <ImageView
-        android:id="@+id/ivPic"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:background="@color/white"
+        tools:ignore="MissingConstraints">
+        <ImageView
+            android:id="@+id/ivPic"
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            />
 
-        <TextView
-            android:id="@+id/tvContact"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp" />
+            android:orientation="vertical"
+            android:padding="10dp">
 
+            <TextView
+                android:id="@+id/tvContact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp" />
+
+            <TextView
+                android:id="@+id/tvLast"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="7dp"
+                android:padding="5dp" />
+
+            <TextView
+                android:id="@+id/tvLastDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:textSize="3dp"/>
+
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

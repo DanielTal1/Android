@@ -20,6 +20,7 @@ import com.example.myapplication.entities.User;
 
 public class Register extends AppCompatActivity {
     private ImageView image;
+    private Uri selectedImage=null;
     public TextView UsernameError;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +89,7 @@ public class Register extends AppCompatActivity {
                         Intent iChat = new Intent(this, ChatActivity.class);
                         String current_user = Username;
                         startActivity(iChat.putExtra("user", current_user));
+                        startActivity(iChat.putExtra("imageUri", selectedImage.toString()));
                     } else{
                         UsernameError.setText("Username taken");
                         UsernameError.setVisibility(View.VISIBLE);
@@ -110,7 +112,7 @@ public class Register extends AppCompatActivity {
                     Intent data = result.getData();
                     if(data!=null&& data.getData()!=null){
                         image=findViewById(R.id.imageView3);
-                        Uri selectedImage=data.getData();
+                        selectedImage=data.getData();
                         image.setImageURI(selectedImage);
                     }
                 }
