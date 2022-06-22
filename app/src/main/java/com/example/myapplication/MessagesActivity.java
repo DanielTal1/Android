@@ -99,9 +99,10 @@ public class MessagesActivity extends AppCompatActivity {
 
                         }
                     });
+                    viewModel.getListFromSource();
                 }
             });
-            viewModel.getListFromSource();
+
 
             etMessage.setText("");
         });
