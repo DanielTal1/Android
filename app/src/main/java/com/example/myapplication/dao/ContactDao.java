@@ -20,6 +20,9 @@ public interface ContactDao {
     @Query("SELECT * FROM contact")
     List<Contact> getAll();
 
+    @Query("SELECT * FROM contact")
+    LiveData<List<Contact>> getAllLive();
+
     @Insert
     void insert(Contact... contacts);
     @Insert(onConflict = OnConflictStrategy.REPLACE)
