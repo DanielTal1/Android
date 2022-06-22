@@ -36,6 +36,12 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
         mItemListener = itemClickListener;
     }
 
+
+    public ContactsListAdapter(List<Contact> contacts, Context context, ItemClickListener itemClickListener) {
+        mInflater = LayoutInflater.from(context);
+        mItemListener = itemClickListener;
+        this.contacts = contacts;
+    }
     @Override
     public ContactViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = mInflater.inflate(R.layout.contact_item, parent, false);
@@ -56,8 +62,12 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
     }
 
     public void setContacts(List<Contact> s) {
-        contacts = s;
+        extracted(s);
         notifyDataSetChanged();
+    }
+
+    private void extracted(List<Contact> s) {
+        contacts = s;
     }
 
     @Override

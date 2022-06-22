@@ -39,9 +39,10 @@ public class ChatActivity extends AppCompatActivity {
         TextView tvCurrentUser = findViewById(R.id.tvCurrentUser);
 
         Intent intent = getIntent();
-        user = (String) intent.getSerializableExtra("user");
+        user = (String) intent.getStringExtra("user");
         if (user != null) {
             tvCurrentUser.setText(user);
+            System.out.println(tvCurrentUser.getText().toString());
         }
         FloatingActionButton btnAddContact = findViewById(R.id.btnAddContact);
         btnAddContact.setOnClickListener(view -> {
@@ -69,13 +70,15 @@ public class ChatActivity extends AppCompatActivity {
         lstContacts.setLayoutManager(new LinearLayoutManager(this));
 
         if (viewModel == null || !user.equals(viewModel.getUser())) {
-            viewModel = new ContactsViewModel(this.getApplicationContext(), user);
+            viewModel = new ViewModelProvider.AndroidViewModelFactory(getApplication()).create(ContactsViewModel.class);
+            viewModel.init(this,user);
         }
         viewModel.get().observe(this, contacts -> {
+            System.out.println(contacts.size());
             adapter.setContacts(contacts);
         });
 
-        viewModel.getListFromSource();
+       // viewModel.getListFromSource();
 
         //call repository
         //repository.getContacts(user)
@@ -103,8 +106,6 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        setContentView(R.layout.activity_chat);
-
 
         FloatingActionButton btnAddContact = findViewById(R.id.btnAddContact);
         btnAddContact.setOnClickListener(view -> {
@@ -122,8 +123,6 @@ public class ChatActivity extends AppCompatActivity {
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
-
-
-
+        viewModel.getListFromSource();
     }
 }

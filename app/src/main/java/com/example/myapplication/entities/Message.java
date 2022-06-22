@@ -1,22 +1,44 @@
 package com.example.myapplication.entities;
 
-public class Message {
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "messages")
+public class Message {
+    @PrimaryKey
+    @NonNull
     private int id;
+
+    private String contactId;
     private String content;
     private String created;
     private boolean sent;
 
+
+
+    @Ignore
     public Message(int id, String content) {
         this.id = id;
         this.content = content;
     }
 
-    public Message(int id, String content, String created, boolean sent) {
+    public Message(int id, String content, String created, boolean sent,String contactId) {
         this.id = id;
         this.content = content;
         this.created = created;
         this.sent = sent;
+        this.contactId = contactId;
+    }
+
+    public String getContactId() {
+        return contactId;
+    }
+
+    public void setContactId(String contactId) {
+        this.contactId = contactId;
     }
 
     public int getId() {

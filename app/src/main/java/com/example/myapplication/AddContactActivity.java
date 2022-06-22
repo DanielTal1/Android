@@ -91,7 +91,6 @@ public class AddContactActivity extends AppCompatActivity {
                                 return;
                             }
                         });
-
                     }
                 });
 

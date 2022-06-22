@@ -9,8 +9,11 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.myapplication.AppDB;
 import com.example.myapplication.api.Api;
 //import com.example.myapplication.api.ContactApi;
+import com.example.myapplication.api.MyCallbackMessagesList;
 import com.example.myapplication.dao.ContactDao;
 import com.example.myapplication.entities.Contact;
+import com.example.myapplication.entities.ContactWithMessages;
+import com.example.myapplication.entities.Message;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -18,6 +21,7 @@ import java.util.List;
 public class ContactsRepository {
     private ContactDao dao;
     private LiveData<List<Contact>> contactListData;
+    private LiveData<List<ContactWithMessages>> contactWithMessagesLiveData;
     private Api api;
     private AppDB db;
     private String user;
@@ -27,11 +31,16 @@ public class ContactsRepository {
         dao = db.contactDao();
         this.user = user;
         contactListData = dao.getAllLive();
+        contactWithMessagesLiveData = dao.getContactMessagesLive();
         api = new Api();
     }
 
     public LiveData<List<Contact>> getAll() {
         return contactListData;
+    }
+
+    public LiveData<List<ContactWithMessages>> getAllMessages() {
+        return contactWithMessagesLiveData;
     }
 
     public String getUser() {
@@ -40,9 +49,20 @@ public class ContactsRepository {
 
     public void getSourceListTodb() {
         api.getContacts(user, apiContacts-> {
+            for(Contact c: apiContacts) {
+                api.getMessages(user, c.getId(), messages ->  {
+                    for(Message m : messages) {
+                        m.setContactId(c.getId());
+                    }
+                    System.out.println(messages.size() + " MESSAGES from " + c.getContact());
+                    db.runInTransaction(() ->  dao.insertAllMessages(messages));
+                });
+            }
             dao.insertAll(apiContacts);
         });
     }
+
+
 
     //getContacts function
     //var list= what returns from api

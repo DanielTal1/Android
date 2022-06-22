@@ -8,10 +8,11 @@ import androidx.room.RoomDatabase;
 
 import com.example.myapplication.dao.ContactDao;
 import com.example.myapplication.entities.Contact;
+import com.example.myapplication.entities.Message;
 
 import java.util.Objects;
 
-@Database(entities = {Contact.class}, version = 2)
+@Database(entities = {Contact.class, Message.class}, version = 4)
 public abstract class  AppDB extends RoomDatabase {
     private static volatile AppDB db;
     public abstract   ContactDao contactDao();
@@ -32,6 +33,7 @@ public abstract class  AppDB extends RoomDatabase {
         }
         if(db == null) {
             db = Room.databaseBuilder(context.getApplicationContext(), AppDB.class, user)
+                    .fallbackToDestructiveMigration()
                     .allowMainThreadQueries().build();
         }
         return db;

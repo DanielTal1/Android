@@ -5,10 +5,13 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Transaction;
 import androidx.room.Update;
 
 import androidx.lifecycle.LiveData;
 import com.example.myapplication.entities.Contact;
+import com.example.myapplication.entities.ContactWithMessages;
+import com.example.myapplication.entities.Message;
 
 import java.util.List;
 
@@ -24,6 +27,16 @@ public interface ContactDao {
     @Query("SELECT * FROM contact")
     LiveData<List<Contact>> getAllLive();
 
+    @Transaction
+    @Query("SELECT * from contact")
+    List<ContactWithMessages> getContactMessages();
+
+    @Transaction
+    @Query("SELECT * from contact")
+    LiveData<List<ContactWithMessages>> getContactMessagesLive();
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertAllMessages(List<Message> messageList);
 
     @Insert
     void insert(Contact... contacts);

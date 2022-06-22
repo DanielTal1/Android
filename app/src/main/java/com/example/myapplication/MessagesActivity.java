@@ -1,6 +1,8 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -19,7 +21,10 @@ import android.widget.Toast;
 
 import com.example.myapplication.adapters.MessagesListAdapter;
 import com.example.myapplication.api.Api;
+import com.example.myapplication.entities.ContactWithMessages;
 import com.example.myapplication.entities.Message;
+import com.example.myapplication.viewmodels.ContactsViewModel;
+import com.example.myapplication.viewmodels.MessagesViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +36,7 @@ public class MessagesActivity extends AppCompatActivity {
     private  Context context;
     private String user;
     private String contact;
+    private MessagesViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +58,9 @@ public class MessagesActivity extends AppCompatActivity {
             tvCurrentContact.setText(nickname);
         }
 
+        viewModel = new ViewModelProvider.AndroidViewModelFactory(getApplication()).create(MessagesViewModel.class);
+        viewModel.init(user,this);
+
         RecyclerView lstMessages = findViewById(R.id.lstMessages);
         final MessagesListAdapter adapter = new MessagesListAdapter(this);
 
@@ -61,10 +70,20 @@ public class MessagesActivity extends AppCompatActivity {
         layoutManager.setStackFromEnd(true);
         lstMessages.setLayoutManager(layoutManager);
 
-        api.getMessages(user, contact, apiMessages-> {
-            adapter.setMessages(apiMessages);
-            msgCount = apiMessages.size();
+
+        viewModel.getMessages().observe(this, contactWithMessages -> {
+            for(ContactWithMessages c : contactWithMessages) {
+                if(c.contact.getId().equals(contact)) {
+                    adapter.setMessages(c.messageList);
+                    msgCount = c.messageList.size();
+                    break;
+                }
+            }
         });
+       // api.getMessages(user, contact, apiMessages-> {
+          //  adapter.setMessages(apiMessages);
+            //msgCount = apiMessages.size();
+       // });
 
         SwipeRefreshLayout swipeRefreshLayout = findViewById(R.id.refresh);
         swipeRefreshLayout.setOnRefreshListener(() -> {
@@ -76,12 +95,12 @@ public class MessagesActivity extends AppCompatActivity {
         sendBtn.setOnClickListener(v -> {
             EditText etMessage = findViewById(R.id.etMessage);
 
-            Message message = new Message(0, etMessage.getText().toString(), "00:00", true);
+            Message message = new Message(0, etMessage.getText().toString(), "00:00", true,contact);
             api.postMessage(user, contact, message, response-> {
                 if (response) {
                     api.transfer(user, contact,server, message, resp-> {
                         if (resp) {
-                            ;
+
                         }
                     });
                     api.getMessages(user, contact, apiMessages-> {
