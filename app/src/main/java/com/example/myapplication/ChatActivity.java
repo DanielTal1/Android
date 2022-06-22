@@ -27,7 +27,6 @@ import java.util.List;
 
 public class ChatActivity extends AppCompatActivity {
 
-    ContactsRepository contactsRepository;
     private ContactsViewModel viewModel;
     private String user;
     private ContactsListAdapter adapter;
@@ -44,7 +43,6 @@ public class ChatActivity extends AppCompatActivity {
         if (user != null) {
             tvCurrentUser.setText(user);
         }
-        contactsRepository = new ContactsRepository(this,user);
         FloatingActionButton btnAddContact = findViewById(R.id.btnAddContact);
         btnAddContact.setOnClickListener(view -> {
             Intent i = new Intent(this, AddContactActivity.class);
@@ -77,7 +75,7 @@ public class ChatActivity extends AppCompatActivity {
             adapter.setContacts(contacts);
         });
 
-        contactsRepository.getSourceListTodb();
+        viewModel.getListFromSource();
 
         //call repository
         //repository.getContacts(user)

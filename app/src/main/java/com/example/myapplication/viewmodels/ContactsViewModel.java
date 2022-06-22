@@ -32,6 +32,10 @@ public class ContactsViewModel extends ViewModel {
         return user;
     }
 
+    public void getListFromSource() {
+        mRepository.getSourceListTodb();
+    }
+
 //    public void add(Contact contact) { mRepository.add(contact); }
 //
 //    public void delete(Contact contact) { mRepository.delete(contact); }
