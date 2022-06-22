@@ -49,9 +49,8 @@ public class ChatActivity extends AppCompatActivity {
             tvCurrentUser.setText(user);
             System.out.println(tvCurrentUser.getText().toString());
         }
-
-        Uri imageUri= Uri.parse(intent.getStringExtra("imageUri"));
-        if(imageUri!=null){
+        if(intent.getStringExtra("imageUri")!=null){
+            Uri imageUri= Uri.parse(intent.getStringExtra("imageUri"));
             ImageView imageView = findViewById(R.id.UserImage);
             imageView.setImageURI(imageUri);
         }
