@@ -20,10 +20,14 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
     class ContactViewHolder extends RecyclerView.ViewHolder {
         private final TextView tvContact;
         private final ImageView ivPic;
+        private TextView last;
+        private TextView lastDate;
         private ContactViewHolder(View itemView) {
             super(itemView);
             tvContact = itemView.findViewById(R.id.tvContact);
             ivPic = itemView.findViewById(R.id.ivPic);
+            last= itemView.findViewById(R.id.tvLast);
+            lastDate= itemView.findViewById(R.id.tvLastDate);
         }
     }
 
@@ -54,7 +58,8 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
             final Contact current = contacts.get(position);
             holder.tvContact.setText(current.getContact());
             holder.ivPic.setImageResource(R.drawable.cat);
-
+            holder.last.setText(current.getLast());
+            holder.lastDate.setText(current.getLastdate());
             holder.itemView.setOnClickListener(view -> {
                 mItemListener.onItemClick(contacts.get(position));
             });

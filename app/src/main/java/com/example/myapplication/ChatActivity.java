@@ -1,7 +1,12 @@
 package com.example.myapplication;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -44,6 +49,12 @@ public class ChatActivity extends AppCompatActivity {
             tvCurrentUser.setText(user);
             System.out.println(tvCurrentUser.getText().toString());
         }
+
+        Uri imageUri= Uri.parse(intent.getStringExtra("imageUri"));
+        if(imageUri!=null){
+            ImageView imageView = findViewById(R.id.UserImage);
+            imageView.setImageURI(imageUri);
+        }
         FloatingActionButton btnAddContact = findViewById(R.id.btnAddContact);
         btnAddContact.setOnClickListener(view -> {
             Intent i = new Intent(this, AddContactActivity.class);
@@ -59,9 +70,11 @@ public class ChatActivity extends AppCompatActivity {
                 Bundle extras = new Bundle();
                 String current_contact = contact.getId();
                 String contact_nick = contact.getName();
+                String contact_server=contact.getServer();
                 extras.putString("user", user);
                 extras.putString("contact", current_contact);
                 extras.putString("nickname", contact_nick);
+                extras.putString("server", contact_server);
                 startActivity(iMessages.putExtras(extras));
             }
         });
@@ -78,19 +91,7 @@ public class ChatActivity extends AppCompatActivity {
             adapter.setContacts(contacts);
         });
 
-       // viewModel.getListFromSource();
 
-        //call repository
-        //repository.getContacts(user)
-
-//        api.getContacts(user, apiContacts-> {
-//            adapter.setContacts(apiContacts);
-////            for (int i = 0; i < apiContacts.size(); i++) {
-////                Contact contact = new Contact(apiContacts.get(i).getId(), apiContacts.get(i).getName());
-////                contactDao.insert(contact);
-////            }
-//        });
-        /*
         HashMap<String,String> dict = new HashMap<>();
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(ChatActivity.this, instanceIdResult -> {
             String Token=instanceIdResult.getToken();
@@ -99,14 +100,12 @@ public class ChatActivity extends AppCompatActivity {
             api.sendToken(dict);
         });
 
-
-         */
     }
 
     @Override
     protected void onResume(){
         super.onResume();
-
+        this.registerReceiver(mMessageReceiver, new IntentFilter("unique_name"));
         FloatingActionButton btnAddContact = findViewById(R.id.btnAddContact);
         btnAddContact.setOnClickListener(view -> {
             Intent i = new Intent(this, AddContactActivity.class);
@@ -125,4 +124,23 @@ public class ChatActivity extends AppCompatActivity {
         });
         viewModel.getListFromSource();
     }
+
+
+
+    //Must unregister onPause()
+    @Override
+    protected void onPause() {
+        super.onPause();
+        this.unregisterReceiver(mMessageReceiver);
+    }
+
+
+    //This is the handler that will manager to process the broadcast intent
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            viewModel.getListFromSource();
+        }
+    };
 }
