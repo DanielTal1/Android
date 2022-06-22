@@ -23,8 +23,8 @@ public class MessagesViewModel extends AndroidViewModel {
        super(application);
    }
 
-   public void init(String user,Context context) {
-       mRepository = new ContactsRepository(context,user);
+   public void init(String user,Context context, String server) {
+       mRepository = new ContactsRepository(context,user, server);
        messages = mRepository.getAllMessages();
    }
 

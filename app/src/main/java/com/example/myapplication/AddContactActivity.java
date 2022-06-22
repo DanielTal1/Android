@@ -25,7 +25,10 @@ public class AddContactActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_contact);
         Intent intent = getIntent();
-        String user = (String) intent.getSerializableExtra("user");
+        Bundle extras = intent.getExtras();
+        String user = extras.getString("user");
+//        String set_server = extras.getString("server");
+//        String user = (String) intent.getSerializableExtra("user");
         ImageView btnBackToContacts=findViewById(R.id.backToContacts);
         btnBackToContacts.setOnClickListener(v-> finish());
         Button btnAddContact=findViewById(R.id.btnSave);
@@ -65,7 +68,7 @@ public class AddContactActivity extends AppCompatActivity {
             }
             if(!areErrors){
                 HashMap<String,String> dict = new HashMap<>();
-                Api api=new Api();
+                Api api=new Api(server);
                 dict.put("from",user);
                 dict.put("to", name);
                 dict.put("server", server);

@@ -24,30 +24,27 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Api api=new Api();
-        HashMap<String,String> dict = new HashMap<>();
-        TextView txtHref=findViewById(R.id.textViewHref);
-        txtHref.setOnClickListener(v->{
-            Intent i = new Intent(this,Register.class);
-            startActivity(i);
-        });
-
-        ImageView ivSettings = findViewById(R.id.ivSettings);
-
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-
+        ImageView ivSettings = findViewById(R.id.ivSettings);
         ivSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+//                finish();
                 startActivity(new Intent(MainActivity.this, SettingsActivity.class));
             }
         });
 
         String server = sharedPreferences.getString(getString(R.string.changed_server), "text");
+        HashMap<String,String> dict = new HashMap<>();
+        TextView txtHref=findViewById(R.id.textViewHref);
+        txtHref.setOnClickListener(v->{
+            Intent i = new Intent(this,Register.class);
+            startActivity(i.putExtra("server", server));
+        });
 
-        TextView stam = findViewById(R.id.stam);
-        stam.setText(server);
+        Api api=new Api(server);
+//        TextView stam = findViewById(R.id.stam);
+//        stam.setText(server);
 
         Button loginBtn= findViewById(R.id.btn_login);
         loginBtn.setOnClickListener(v->{
@@ -76,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
                     if(user!=null){
                         Bundle extras = new Bundle();
                         extras.putString("server", server);
+//                        extras.putString("server", api.getApi_server());
                         extras.putString("user", Username);
                         Intent iChat = new Intent(this, ChatActivity.class);
 //                        String current_user = Username;

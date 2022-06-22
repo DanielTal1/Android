@@ -26,9 +26,9 @@ public class ContactsViewModel extends AndroidViewModel {
         super(application);
     }
 
-    public void init(Context context,String user) {
+    public void init(Context context,String user, String server) {
         setUser(user);
-        mRepository = new ContactsRepository(context, user);
+        mRepository = new ContactsRepository(context, user, server);
         contacts = mRepository.getAll();
     }
 

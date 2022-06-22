@@ -26,13 +26,13 @@ public class ContactsRepository {
     private AppDB db;
     private String user;
 
-    public ContactsRepository(Context context, String user) {
+    public ContactsRepository(Context context, String user, String server) {
         db = AppDB.getInstance(context,user);
         dao = db.contactDao();
         this.user = user;
         contactListData = dao.getAllLive();
         contactWithMessagesLiveData = dao.getContactMessagesLive();
-        api = new Api();
+        api = new Api(server);
     }
 
     public LiveData<List<Contact>> getAll() {

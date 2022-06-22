@@ -24,7 +24,9 @@ public class Register extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Api api=new Api();
+        Intent intent = getIntent();
+        String server = intent.getStringExtra("server");
+        Api api=new Api(server);
         setContentView(R.layout.activity_register);
         TextView txtHref=findViewById(R.id.textViewHref);
         txtHref.setOnClickListener(v->{

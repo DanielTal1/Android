@@ -49,8 +49,11 @@ public class ChatActivity extends AppCompatActivity {
         FloatingActionButton btnAddContact = findViewById(R.id.btnAddContact);
         btnAddContact.setOnClickListener(view -> {
             Intent i = new Intent(this, AddContactActivity.class);
+            Bundle extras_add = new Bundle();
             String current_user = user;
-            startActivity(i.putExtra("user", current_user));
+            extras.putString("user", current_user);
+            extras.putString("server", server);
+            startActivity(i.putExtras(extras_add));
         });
 
         RecyclerView lstContacts = findViewById(R.id.lstContacts);
@@ -69,13 +72,13 @@ public class ChatActivity extends AppCompatActivity {
                 startActivity(iMessages.putExtras(extras));
             }
         });
-        Api api = new Api();
+        Api api = new Api(server);
         lstContacts.setAdapter(adapter);
         lstContacts.setLayoutManager(new LinearLayoutManager(this));
 
         if (viewModel == null || !user.equals(viewModel.getUser())) {
             viewModel = new ViewModelProvider.AndroidViewModelFactory(getApplication()).create(ContactsViewModel.class);
-            viewModel.init(this,user);
+            viewModel.init(this,user, server);
         }
         viewModel.get().observe(this, contacts -> {
             System.out.println(contacts.size());
