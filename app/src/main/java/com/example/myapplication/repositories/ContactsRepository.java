@@ -17,7 +17,7 @@ import java.util.List;
 
 public class ContactsRepository {
     private ContactDao dao;
-    private ContactsListData contactListData;
+    private LiveData<List<Contact>> contactListData;
     private Api api;
     private AppDB db;
     private String user;
@@ -26,27 +26,8 @@ public class ContactsRepository {
         db = AppDB.getInstance(context,user);
         dao = db.contactDao();
         this.user = user;
-        contactListData = new ContactsListData();
+        contactListData = dao.getAllLive();
         api = new Api();
-    }
-
-
-
-    class ContactsListData extends MutableLiveData<List<Contact>> {
-
-        public ContactsListData() {
-            super();
-            setValue(new LinkedList<Contact>());
-        }
-
-        @Override
-        protected void onActive() {
-            super.onActive();
-
-            new Thread(() -> {
-                contactListData.postValue(dao.index(user));
-            }).start();
-        }
     }
 
     public LiveData<List<Contact>> getAll() {
@@ -81,7 +62,7 @@ public class ContactsRepository {
 //        }
 //    }
 
-    //    public void add(final Contact contact) {
+//    public void add(final Contact contact) {
 //        api.add(contact);
 //    }
 //
@@ -92,4 +73,3 @@ public class ContactsRepository {
 //    public void reload() {
 //        api.get();
 //    }
-
