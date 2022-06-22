@@ -24,6 +24,13 @@ public class Message {
         this.id = id;
         this.content = content;
     }
+    @Ignore
+    public Message(int id, String content, String created, boolean sent) {
+        this.id = id;
+        this.content = content;
+        this.created = created;
+        this.sent = sent;
+    }
 
     public Message(int id, String content, String created, boolean sent,String contactId) {
         this.id = id;

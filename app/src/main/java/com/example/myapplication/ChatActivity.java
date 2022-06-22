@@ -39,7 +39,9 @@ public class ChatActivity extends AppCompatActivity {
         TextView tvCurrentUser = findViewById(R.id.tvCurrentUser);
 
         Intent intent = getIntent();
-        user = (String) intent.getStringExtra("user");
+        Bundle extras = intent.getExtras();
+        user = extras.getString("user");
+        String server = extras.getString("server");
         if (user != null) {
             tvCurrentUser.setText(user);
             System.out.println(tvCurrentUser.getText().toString());
@@ -59,9 +61,11 @@ public class ChatActivity extends AppCompatActivity {
                 Bundle extras = new Bundle();
                 String current_contact = contact.getId();
                 String contact_nick = contact.getName();
+                String contact_server = contact.getServer();
                 extras.putString("user", user);
                 extras.putString("contact", current_contact);
                 extras.putString("nickname", contact_nick);
+                extras.putString("server", contact_server);
                 startActivity(iMessages.putExtras(extras));
             }
         });

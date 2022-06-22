@@ -25,10 +25,10 @@ public class Api {
     WebServiceApi webServiceApi;
 
     public Api(){
-        retrofit=new Retrofit.Builder()
-                .baseUrl(MyApplication.context.getString(R.string.BaseUrl))
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+            retrofit=new Retrofit.Builder()
+                    .baseUrl(MyApplication.context.getString(R.string.BaseUrl))
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
         webServiceApi=retrofit.create(WebServiceApi.class);
     }
 

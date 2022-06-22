@@ -95,12 +95,12 @@ public class MessagesActivity extends AppCompatActivity {
         sendBtn.setOnClickListener(v -> {
             EditText etMessage = findViewById(R.id.etMessage);
 
-            Message message = new Message(0, etMessage.getText().toString(), "00:00", true,contact);
+            Message message = new Message(0, etMessage.getText().toString(), "00:00", true);
             api.postMessage(user, contact, message, response-> {
                 if (response) {
                     api.transfer(user, contact,server, message, resp-> {
                         if (resp) {
-
+                            ;
                         }
                     });
                     api.getMessages(user, contact, apiMessages-> {
