@@ -99,15 +99,38 @@ public class MessagesActivity extends AppCompatActivity {
                             ;
                         }
                     });
-                    api.getMessages(user, contact, apiMessages-> {
-                        adapter.setMessages(apiMessages);
-                        msgCount = apiMessages.size();
-                        lstMessages.scrollToPosition(msgCount - 1);
-                    });
+                    viewModel.getListFromSource();
                 }
             });
+
 
             etMessage.setText("");
         });
     }
+
+}
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        this.registerReceiver(mMessageReceiver, new IntentFilter("unique_name"));
+    }
+
+    //Must unregister onPause()
+    @Override
+    protected void onPause() {
+        super.onPause();
+        this.unregisterReceiver(mMessageReceiver);
+    }
+
+
+    //This is the handler that will manager to process the broadcast intent
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            viewModel.getListFromSource();
+        }
+    };
+
 }
