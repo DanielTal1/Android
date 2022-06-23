@@ -16,12 +16,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.myapplication.api.Api;
+import com.example.myapplication.dao.ContactDao;
 import com.example.myapplication.entities.User;
+import com.example.myapplication.entities.UserImage;
 
 public class Register extends AppCompatActivity {
     private ImageView image;
+    private ContactDao dao;
     private Uri selectedImage=null;
     public TextView UsernameError;
+    private boolean isPicture = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,16 +93,17 @@ public class Register extends AppCompatActivity {
                 User newUser=new User(Username,Username,Password,Nickname);
                 api.RegisterUser(newUser, success -> {
                     if(success){
+                        AppDB db = AppDB.getInstance(this, newUser.getId());
+                        dao = db.contactDao();
                         Intent iChat = new Intent(this, ChatActivity.class);
-
+                        String current_user = Username;
                         Bundle extras = new Bundle();
                         extras.putString("server", server);
-                        extras.putString("user", Username);
+                        extras.putString("user", current_user);
+                        if (isPicture) {
+                            dao.insertImage(new UserImage(selectedImage.toString()));
+                        }
                         startActivity(iChat.putExtras(extras));
-
-                        String current_user = Username;
-                        startActivity(iChat.putExtra("user", current_user));
-                        startActivity(iChat.putExtra("imageUri", selectedImage.toString()));
 
                     } else{
                         UsernameError.setText("Username taken");
@@ -120,6 +126,7 @@ public class Register extends AppCompatActivity {
                 if (result.getResultCode() == Activity.RESULT_OK) {
                     Intent data = result.getData();
                     if(data!=null&& data.getData()!=null){
+                        isPicture = true;
                         image=findViewById(R.id.imageView3);
                         selectedImage=data.getData();
                         image.setImageURI(selectedImage);

@@ -21,6 +21,7 @@ import com.example.myapplication.adapters.ContactsListAdapter;
 import com.example.myapplication.api.Api;
 import com.example.myapplication.dao.ContactDao;
 import com.example.myapplication.entities.Contact;
+import com.example.myapplication.entities.UserImage;
 import com.example.myapplication.repositories.ContactsRepository;
 import com.example.myapplication.viewmodels.ContactsViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -35,7 +36,7 @@ public class ChatActivity extends AppCompatActivity {
     private ContactsViewModel viewModel;
     private String user;
     private ContactsListAdapter adapter;
-
+    private ContactDao dao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,10 +52,15 @@ public class ChatActivity extends AppCompatActivity {
             tvCurrentUser.setText(user);
             System.out.println(tvCurrentUser.getText().toString());
         }
-        if(intent.getExtras().containsKey("imageUri")&&intent.getStringExtra("imageUri")!=null){
-            Uri imageUri= Uri.parse(intent.getStringExtra("imageUri"));
-            ImageView imageView = findViewById(R.id.UserImage);
-            imageView.setImageURI(imageUri);
+        AppDB db = AppDB.getInstance(this, user);
+        dao = db.contactDao();
+        UserImage userImage=dao.getImage();
+        if(userImage!=null){
+            if(userImage.getImage()!=null){
+                Uri imageUri= Uri.parse(userImage.getImage());
+                ImageView imageView = findViewById(R.id.UserImage);
+                imageView.setImageURI(imageUri);
+            }
         }
         FloatingActionButton btnAddContact = findViewById(R.id.btnAddContact);
         btnAddContact.setOnClickListener(view -> {

@@ -12,6 +12,7 @@ import androidx.lifecycle.LiveData;
 import com.example.myapplication.entities.Contact;
 import com.example.myapplication.entities.ContactWithMessages;
 import com.example.myapplication.entities.Message;
+import com.example.myapplication.entities.UserImage;
 
 import java.util.List;
 
@@ -39,7 +40,13 @@ public interface ContactDao {
     void insertAllMessages(List<Message> messageList);
 
     @Insert
-    void insert(Contact... contacts);
+    void insertImage(UserImage ImageUri);
+
+
+    @Query("SELECT * FROM UserImage")
+    UserImage getImage();
+
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<Contact> contacts);
     @Update

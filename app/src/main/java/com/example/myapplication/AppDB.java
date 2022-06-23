@@ -9,10 +9,11 @@ import androidx.room.RoomDatabase;
 import com.example.myapplication.dao.ContactDao;
 import com.example.myapplication.entities.Contact;
 import com.example.myapplication.entities.Message;
+import com.example.myapplication.entities.UserImage;
 
 import java.util.Objects;
 
-@Database(entities = {Contact.class, Message.class}, version = 4)
+@Database(entities = {Contact.class, Message.class, UserImage.class}, version = 5)
 public abstract class  AppDB extends RoomDatabase {
     private static volatile AppDB db;
     public abstract   ContactDao contactDao();
