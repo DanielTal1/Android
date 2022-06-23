@@ -77,8 +77,6 @@ public class ChatActivity extends AppCompatActivity {
 
                 String contact_server = contact.getServer();
 
-                String contact_server=contact.getServer();
-
                 extras.putString("user", user);
                 extras.putString("contact", current_contact);
                 extras.putString("nickname", contact_nick);

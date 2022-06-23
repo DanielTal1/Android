@@ -76,6 +76,7 @@ public class MessagesActivity extends AppCompatActivity {
                 if(c.contact.getId().equals(contact)) {
                     adapter.setMessages(c.messageList);
                     msgCount = c.messageList.size();
+                    lstMessages.scrollToPosition(msgCount-1);
                     break;
                 }
             }
@@ -108,7 +109,7 @@ public class MessagesActivity extends AppCompatActivity {
         });
     }
 
-}
+
 
     @Override
     protected void onResume() {
