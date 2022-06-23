@@ -80,10 +80,6 @@ public class MessagesActivity extends AppCompatActivity {
                 }
             }
         });
-       // api.getMessages(user, contact, apiMessages-> {
-          //  adapter.setMessages(apiMessages);
-            //msgCount = apiMessages.size();
-       // });
 
         SwipeRefreshLayout swipeRefreshLayout = findViewById(R.id.refresh);
         swipeRefreshLayout.setOnRefreshListener(() -> {
@@ -114,45 +110,4 @@ public class MessagesActivity extends AppCompatActivity {
             etMessage.setText("");
         });
     }
-
-    /*
-    @Override
-    protected void onResume() {
-        super.onResume();
-        this.registerReceiver(mMessageReceiver, new IntentFilter("unique_name"));
-    }
-
-    //Must unregister onPause()
-    @Override
-    protected void onPause() {
-        super.onPause();
-        this.unregisterReceiver(mMessageReceiver);
-    }
-
-
-    //This is the handler that will manager to process the broadcast intent
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-
-            // Extract data included in the Intent
-            String message = intent.getStringExtra("message");
-            //all of this will be changed, instead the new message will be added to room
-            RecyclerView lstMessages = findViewById(R.id.lstMessages);
-            final MessagesListAdapter adapter = new MessagesListAdapter(context);
-            Api api = new Api();
-            lstMessages.setAdapter(adapter);
-            layoutManager = new LinearLayoutManager(context);
-            layoutManager.setStackFromEnd(true);
-            lstMessages.setLayoutManager(layoutManager);
-
-            api.getMessages(user, contact, apiMessages-> {
-                adapter.setMessages(apiMessages);
-                msgCount = apiMessages.size();
-            });
-        }
-    };
-    */
-
 }

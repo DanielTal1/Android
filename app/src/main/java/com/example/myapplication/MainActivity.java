@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
         ivSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                finish();
                 startActivity(new Intent(MainActivity.this, SettingsActivity.class));
             }
         });
@@ -73,10 +72,8 @@ public class MainActivity extends AppCompatActivity {
                     if(user!=null){
                         Bundle extras = new Bundle();
                         extras.putString("server", server);
-//                        extras.putString("server", api.getApi_server());
                         extras.putString("user", Username);
                         Intent iChat = new Intent(this, ChatActivity.class);
-//                        String current_user = Username;
                         startActivity(iChat.putExtras(extras));
                     } else{
                         TextView LoginError=findViewById(R.id.login_PasswordError);

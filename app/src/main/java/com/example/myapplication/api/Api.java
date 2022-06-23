@@ -22,20 +22,16 @@ import retrofit2.http.Body;
 
 public class Api {
     Retrofit retrofit;
-//    String api_server;
     WebServiceApi webServiceApi;
 
     public Api(String server){
-        if(server != "") {
+        if(server.startsWith("10.0.2.2")) {
             String url = "http://" + server + "/api/";
-//            api_server = "";
-//            api_server = url;
             retrofit=new Retrofit.Builder()
                     .baseUrl(url)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         } else {
-//            api_server = MyApplication.context.getString(R.string.BaseUrl);
             retrofit = new Retrofit.Builder()
                     .baseUrl(MyApplication.context.getString(R.string.BaseUrl))
                     .addConverterFactory(GsonConverterFactory.create())
@@ -92,8 +88,6 @@ public class Api {
 
 
         });
-
-
     }
 
     public void inviteContact(HashMap<String, String> data, final MyIntegerCallBack mycallback){
@@ -231,8 +225,4 @@ public class Api {
             }
         });
     }
-
-//    public String getApi_server() {
-//        return api_server;
-//    }
 }

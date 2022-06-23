@@ -47,10 +47,4 @@ public class ContactsViewModel extends AndroidViewModel {
     public void getListFromSource() {
         mRepository.getSourceListTodb();
     }
-
-//    public void add(Contact contact) { mRepository.add(contact); }
-//
-//    public void delete(Contact contact) { mRepository.delete(contact); }
-//
-//    public void reload() {mRepository.reload();}
 }

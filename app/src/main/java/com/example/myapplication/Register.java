@@ -88,8 +88,10 @@ public class Register extends AppCompatActivity {
                 api.RegisterUser(newUser, success -> {
                     if(success){
                         Intent iChat = new Intent(this, ChatActivity.class);
-                        String current_user = Username;
-                        startActivity(iChat.putExtra("user", current_user));
+                        Bundle extras = new Bundle();
+                        extras.putString("server", server);
+                        extras.putString("user", Username);
+                        startActivity(iChat.putExtras(extras));
                     } else{
                         UsernameError.setText("Username taken");
                         UsernameError.setVisibility(View.VISIBLE);

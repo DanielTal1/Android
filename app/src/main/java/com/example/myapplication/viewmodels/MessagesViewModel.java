@@ -19,14 +19,14 @@ public class MessagesViewModel extends AndroidViewModel {
 
     private LiveData<List<ContactWithMessages>> messages;
 
-   public MessagesViewModel (Application application) {
-       super(application);
-   }
+    public MessagesViewModel (Application application) {
+    super(application);
+    }
 
-   public void init(String user,Context context, String server) {
-       mRepository = new ContactsRepository(context,user, server);
-       messages = mRepository.getAllMessages();
-   }
+    public void init(String user,Context context, String server) {
+        mRepository = new ContactsRepository(context,user, server);
+        messages = mRepository.getAllMessages();
+    }
 
     public LiveData<List<ContactWithMessages>> getMessages() {
         return messages;
@@ -35,12 +35,4 @@ public class MessagesViewModel extends AndroidViewModel {
     public void getListFromSource() {
         mRepository.getSourceListTodb();
     }
-//
-//    public LiveData<List<Message>> get() {return messages; }
-//
-//    public void add(Message message) { mRepository.add(message); }
-//
-//    public void delete(Message message) { mRepository.delete(message); }
-//
-//    public void reload() {mRepository.reload();}}
 }

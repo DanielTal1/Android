@@ -17,9 +17,6 @@ import java.util.HashMap;
 
 public class AddContactActivity extends AppCompatActivity {
 
-//    private AppDB db;
-//    private PostDao postDao;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,8 +24,6 @@ public class AddContactActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         String user = extras.getString("user");
-//        String set_server = extras.getString("server");
-//        String user = (String) intent.getSerializableExtra("user");
         ImageView btnBackToContacts=findViewById(R.id.backToContacts);
         btnBackToContacts.setOnClickListener(v-> finish());
         Button btnAddContact=findViewById(R.id.btnSave);
@@ -96,25 +91,7 @@ public class AddContactActivity extends AppCompatActivity {
                         });
                     }
                 });
-
-
             }
-
         });
-//        db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "PostsDB")
-//                .allowMainThreadQueries().build();
-//
-//        postDao = db.postDao();
-//        String tempUser = "Rita";
-//
-//        Button btnSave = findViewById(R.id.btnSave);
-//        btnSave.setOnClickListener(view -> {
-//            EditText etNewContact = findViewById(R.id.etNewContact);
-//            Contact post = new Contact(0, etNewContact.getText().toString(), tempUser);
-//            postDao.insert(post);
-//
-//            finish();
-//        });
     }
-
 }

@@ -84,30 +84,6 @@ public class ChatActivity extends AppCompatActivity {
             System.out.println(contacts.size());
             adapter.setContacts(contacts);
         });
-
-       // viewModel.getListFromSource();
-
-        //call repository
-        //repository.getContacts(user)
-
-//        api.getContacts(user, apiContacts-> {
-//            adapter.setContacts(apiContacts);
-////            for (int i = 0; i < apiContacts.size(); i++) {
-////                Contact contact = new Contact(apiContacts.get(i).getId(), apiContacts.get(i).getName());
-////                contactDao.insert(contact);
-////            }
-//        });
-        /*
-        HashMap<String,String> dict = new HashMap<>();
-        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(ChatActivity.this, instanceIdResult -> {
-            String Token=instanceIdResult.getToken();
-            dict.put("Username",user);
-            dict.put("Token", Token);
-            api.sendToken(dict);
-        });
-
-
-         */
     }
 
     @Override
