@@ -26,13 +26,13 @@ public class ContactsRepository {
     private AppDB db;
     private String user;
 
-    public ContactsRepository(Context context, String user) {
+    public ContactsRepository(Context context, String user, String server) {
         db = AppDB.getInstance(context,user);
         dao = db.contactDao();
         this.user = user;
         contactListData = dao.getAllLive();
         contactWithMessagesLiveData = dao.getContactMessagesLive();
-        api = new Api();
+        api = new Api(server);
     }
 
     public LiveData<List<Contact>> getAll() {
@@ -62,34 +62,7 @@ public class ContactsRepository {
         });
     }
 
-
-
-    //getContacts function
-    //var list= what returns from api
-    //dao.insert(list)
-
     public LiveData<List<Contact>> getRoomContacts(){
         return contactListData;
     }
 }
-
-
-
-//    public void setData(List<Contact> contacts) {
-//        this.contactListData.setValue(contacts);
-//        for (int i = 0; i < contacts.size(); i++) {
-//            this.dao.insert(contacts.get(i));
-//        }
-//    }
-
-//    public void add(final Contact contact) {
-//        api.add(contact);
-//    }
-//
-//    public void delete(final Contact contact) {
-//        api.delete(contact);
-//    }
-//
-//    public void reload() {
-//        api.get();
-//    }

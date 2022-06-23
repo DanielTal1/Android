@@ -26,9 +26,9 @@ public class ContactsViewModel extends AndroidViewModel {
         super(application);
     }
 
-    public void init(Context context,String user) {
+    public void init(Context context,String user, String server) {
         setUser(user);
-        mRepository = new ContactsRepository(context, user);
+        mRepository = new ContactsRepository(context, user, server);
         contacts = mRepository.getAll();
     }
 
@@ -47,10 +47,4 @@ public class ContactsViewModel extends AndroidViewModel {
     public void getListFromSource() {
         mRepository.getSourceListTodb();
     }
-
-//    public void add(Contact contact) { mRepository.add(contact); }
-//
-//    public void delete(Contact contact) { mRepository.delete(contact); }
-//
-//    public void reload() {mRepository.reload();}
 }

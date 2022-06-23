@@ -59,12 +59,12 @@ public class MessagesActivity extends AppCompatActivity {
         }
 
         viewModel = new ViewModelProvider.AndroidViewModelFactory(getApplication()).create(MessagesViewModel.class);
-        viewModel.init(user,this);
+        viewModel.init(user,this, server);
 
         RecyclerView lstMessages = findViewById(R.id.lstMessages);
         final MessagesListAdapter adapter = new MessagesListAdapter(this);
 
-        Api api = new Api();
+        Api api = new Api(server);
         lstMessages.setAdapter(adapter);
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setStackFromEnd(true);
@@ -91,12 +91,12 @@ public class MessagesActivity extends AppCompatActivity {
         sendBtn.setOnClickListener(v -> {
             EditText etMessage = findViewById(R.id.etMessage);
 
-            Message message = new Message(0, etMessage.getText().toString(), "00:00", true,contact);
+            Message message = new Message(0, etMessage.getText().toString(), "00:00", true);
             api.postMessage(user, contact, message, response-> {
                 if (response) {
                     api.transfer(user, contact,server, message, resp-> {
                         if (resp) {
-
+                            ;
                         }
                     });
                     viewModel.getListFromSource();
@@ -107,6 +107,8 @@ public class MessagesActivity extends AppCompatActivity {
             etMessage.setText("");
         });
     }
+
+}
 
     @Override
     protected void onResume() {

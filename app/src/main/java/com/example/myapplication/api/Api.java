@@ -24,12 +24,20 @@ public class Api {
     Retrofit retrofit;
     WebServiceApi webServiceApi;
 
-    public Api(){
-        retrofit=new Retrofit.Builder()
-                .baseUrl(MyApplication.context.getString(R.string.BaseUrl))
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        webServiceApi=retrofit.create(WebServiceApi.class);
+    public Api(String server){
+        if(server.startsWith("10.0.2.2")) {
+            String url = "http://" + server + "/api/";
+            retrofit=new Retrofit.Builder()
+                    .baseUrl(url)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        } else {
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(MyApplication.context.getString(R.string.BaseUrl))
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+            webServiceApi = retrofit.create(WebServiceApi.class);
     }
 
     public void sendToken(HashMap<String, String> data){
@@ -80,8 +88,6 @@ public class Api {
 
 
         });
-
-
     }
 
     public void inviteContact(HashMap<String, String> data, final MyIntegerCallBack mycallback){

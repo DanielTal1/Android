@@ -17,15 +17,13 @@ import java.util.HashMap;
 
 public class AddContactActivity extends AppCompatActivity {
 
-//    private AppDB db;
-//    private PostDao postDao;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_contact);
         Intent intent = getIntent();
-        String user = (String) intent.getSerializableExtra("user");
+        Bundle extras = intent.getExtras();
+        String user = extras.getString("user");
         ImageView btnBackToContacts=findViewById(R.id.backToContacts);
         btnBackToContacts.setOnClickListener(v-> finish());
         Button btnAddContact=findViewById(R.id.btnSave);
@@ -65,7 +63,7 @@ public class AddContactActivity extends AppCompatActivity {
             }
             if(!areErrors){
                 HashMap<String,String> dict = new HashMap<>();
-                Api api=new Api();
+                Api api=new Api(server);
                 dict.put("from",user);
                 dict.put("to", name);
                 dict.put("server", server);
@@ -93,25 +91,7 @@ public class AddContactActivity extends AppCompatActivity {
                         });
                     }
                 });
-
-
             }
-
         });
-//        db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "PostsDB")
-//                .allowMainThreadQueries().build();
-//
-//        postDao = db.postDao();
-//        String tempUser = "Rita";
-//
-//        Button btnSave = findViewById(R.id.btnSave);
-//        btnSave.setOnClickListener(view -> {
-//            EditText etNewContact = findViewById(R.id.etNewContact);
-//            Contact post = new Contact(0, etNewContact.getText().toString(), tempUser);
-//            postDao.insert(post);
-//
-//            finish();
-//        });
     }
-
 }

@@ -25,7 +25,9 @@ public class Register extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Api api=new Api();
+        Intent intent = getIntent();
+        String server = intent.getStringExtra("server");
+        Api api=new Api(server);
         setContentView(R.layout.activity_register);
         TextView txtHref=findViewById(R.id.textViewHref);
         txtHref.setOnClickListener(v->{
@@ -87,9 +89,16 @@ public class Register extends AppCompatActivity {
                 api.RegisterUser(newUser, success -> {
                     if(success){
                         Intent iChat = new Intent(this, ChatActivity.class);
+
+                        Bundle extras = new Bundle();
+                        extras.putString("server", server);
+                        extras.putString("user", Username);
+                        startActivity(iChat.putExtras(extras));
+
                         String current_user = Username;
                         startActivity(iChat.putExtra("user", current_user));
                         startActivity(iChat.putExtra("imageUri", selectedImage.toString()));
+
                     } else{
                         UsernameError.setText("Username taken");
                         UsernameError.setVisibility(View.VISIBLE);

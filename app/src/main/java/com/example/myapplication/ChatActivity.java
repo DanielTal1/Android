@@ -44,7 +44,9 @@ public class ChatActivity extends AppCompatActivity {
         TextView tvCurrentUser = findViewById(R.id.tvCurrentUser);
 
         Intent intent = getIntent();
-        user = (String) intent.getStringExtra("user");
+        Bundle extras = intent.getExtras();
+        user = extras.getString("user");
+        String server = extras.getString("server");
         if (user != null) {
             tvCurrentUser.setText(user);
             System.out.println(tvCurrentUser.getText().toString());
@@ -57,8 +59,11 @@ public class ChatActivity extends AppCompatActivity {
         FloatingActionButton btnAddContact = findViewById(R.id.btnAddContact);
         btnAddContact.setOnClickListener(view -> {
             Intent i = new Intent(this, AddContactActivity.class);
+            Bundle extras_add = new Bundle();
             String current_user = user;
-            startActivity(i.putExtra("user", current_user));
+            extras.putString("user", current_user);
+            extras.putString("server", server);
+            startActivity(i.putExtras(extras_add));
         });
 
         RecyclerView lstContacts = findViewById(R.id.lstContacts);
@@ -69,7 +74,11 @@ public class ChatActivity extends AppCompatActivity {
                 Bundle extras = new Bundle();
                 String current_contact = contact.getId();
                 String contact_nick = contact.getName();
+
+                String contact_server = contact.getServer();
+
                 String contact_server=contact.getServer();
+
                 extras.putString("user", user);
                 extras.putString("contact", current_contact);
                 extras.putString("nickname", contact_nick);
@@ -77,18 +86,20 @@ public class ChatActivity extends AppCompatActivity {
                 startActivity(iMessages.putExtras(extras));
             }
         });
-        Api api = new Api();
+        Api api = new Api(server);
         lstContacts.setAdapter(adapter);
         lstContacts.setLayoutManager(new LinearLayoutManager(this));
 
         if (viewModel == null || !user.equals(viewModel.getUser())) {
             viewModel = new ViewModelProvider.AndroidViewModelFactory(getApplication()).create(ContactsViewModel.class);
-            viewModel.init(this,user);
+            viewModel.init(this,user, server);
         }
         viewModel.get().observe(this, contacts -> {
             System.out.println(contacts.size());
             adapter.setContacts(contacts);
         });
+
+
 
 
         HashMap<String,String> dict = new HashMap<>();
@@ -98,6 +109,7 @@ public class ChatActivity extends AppCompatActivity {
             dict.put("Token", Token);
             api.sendToken(dict);
         });
+
 
     }
 
