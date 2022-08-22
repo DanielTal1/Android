@@ -5,7 +5,6 @@ The client android app consists 6 pages: login,register,contacts,chats,settings,
 The client side built using java with Room as a local db and firebase for cloud messaging.      
 
 Add contact with server: 10.0.2.2:7038
-## You are currently in the repository of the android client.
 
 
 ## How to use the app  
