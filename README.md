@@ -25,6 +25,8 @@ and then head back to the chat app by clicking on "Go to chat" in the menu on th
 
 ##
 
-![Screenshot](server1.png)
+![Screenshot](android1.jpg)
 
-![Screenshot](server2.png)
+![Screenshot](android2.jpg)
+
+![Screenshot](android3.jpg)
